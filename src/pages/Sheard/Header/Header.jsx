@@ -1,12 +1,38 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
 
 export default function Header() {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut();
+  };
+
   const navItems = (
-    <>
-      <li className="mr-6">Home</li>
+    <div className="flex items-center">
+      <Link to="/">
+        <li className="mr-6">Home</li>
+      </Link>
       <li className="mr-6">About</li>
-    </>
+      <Link to="/checkouts">
+        {" "}
+        <li>Checkouts</li>
+      </Link>
+      {user ? (
+        <li className="mr-6">
+          <button onClick={handleLogout}>Logout</button>
+        </li>
+      ) : (
+        <Link to="/login">
+          {" "}
+          <li className="mr-6">
+            <button>Login</button>
+          </li>
+        </Link>
+      )}
+    </div>
   );
   return (
     <div>

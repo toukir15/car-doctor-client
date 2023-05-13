@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import login1 from "../../../src/assets/images/login/login.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 export default function Login() {
-  const handleLogin = (event) => {};
+  const { loginUser } = useContext(AuthContext);
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.email.value;
+    loginUser(email, password);
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row">
@@ -18,6 +27,7 @@ export default function Login() {
                 <input
                   type="text"
                   placeholder="email"
+                  name="email"
                   className="input input-bordered"
                 />
               </div>
@@ -28,6 +38,7 @@ export default function Login() {
                 <input
                   type="text"
                   placeholder="password"
+                  name="password"
                   className="input input-bordered"
                 />
                 <label className="label">
@@ -36,10 +47,10 @@ export default function Login() {
                   </a>
                 </label>
               </div>
+              <div className="form-control mt-6">
+                <button className="btn border-0 bg-[#FF3811]">Login</button>
+              </div>
             </form>
-            <div className="form-control mt-6">
-              <button className="btn border-0 bg-[#FF3811]">Login</button>
-            </div>
             <p>
               New to cars doctor?{" "}
               <Link to="/signUp" className="text-[#FF3811]">

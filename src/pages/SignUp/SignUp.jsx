@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import login1 from "../../../src/assets/images/login/login.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 export default function SignUp() {
-  const handleSignUp = (event) => {};
+  const { createUser } = useContext(AuthContext);
+
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    console.log(event);
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    form.reset();
+    console.log(email, password);
+    createUser(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .then((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row">
@@ -19,6 +40,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="name"
+                  name="name"
                   className="input input-bordered"
                 />
               </div>
@@ -29,6 +51,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="email"
+                  name="email"
                   className="input input-bordered"
                 />
               </div>
@@ -39,6 +62,7 @@ export default function SignUp() {
                 <input
                   type="text"
                   placeholder="password"
+                  name="password"
                   className="input input-bordered"
                 />
                 <label className="label">
@@ -47,10 +71,10 @@ export default function SignUp() {
                   </a>
                 </label>
               </div>
+              <div className="form-control mt-6">
+                <button className="btn bg-[#FF3811] border-0">SignUp</button>
+              </div>
             </form>
-            <div className="form-control mt-6">
-              <button className="btn bg-[#FF3811] border-0">SignUp</button>
-            </div>
             <p>
               New to cars doctor?
               <Link to="/signUp" className="text-[#FF3811]">
